@@ -1,0 +1,27 @@
+<#
+.SYNOPSIS
+    Required OneProfile functions/cmdlets to be imported into profile.txt
+#>
+
+######  Required   ######
+$ONEPROFILE_PATH = '' # replace emptry string with absolute path to OneProfile/
+
+. "$global:ONEPROFILE_PATH/OneProfile.ps1"
+. "$global:ONEPROFILE_PATH/PublicProfile.ps1"
+. "$global:ONEPROFILE_PATH/PrivateProfile.ps1"
+
+function Reset-OneProfile {
+  Set-OneProfile
+  . $PROFILE
+  Write-Host "Updated all profiles with OneProfile.ps1" -ForegroundColor Yellow
+}
+
+Set-Alias -Name reset -Value Reset-OneProfile
+Set-Alias -Name profile -Value Invoke-OneProfileConfiguration
+
+######  Profile   ######
+
+## Set public aliases
+Set-Alias -Name touch -Value New-File
+
+## Set private aliases
