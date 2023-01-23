@@ -1,6 +1,8 @@
+
+########## Public Profile ##########
 <#
 .SYNOPSIS
-    Public functions/cmdlets to be imported into profile.txt
+    Public functions/cmdlets for PowerShell profile
 #>
 
 function New-File
@@ -20,3 +22,7 @@ function New-File
 
   $Command
 }
+
+Set-Alias -Name touch -Value New-File
+Set-Alias -Name refresh -Value Set-Profile
+Set-Alias -Name profile -Value Invoke-ProfileConfiguration
