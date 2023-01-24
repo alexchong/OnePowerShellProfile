@@ -36,7 +36,8 @@ function Invoke-ProfileConfiguration {
 
         if ($Type -eq "Public" -or $Type -eq "Private")
         {
-            $File = "$PSScriptRoot\Profile\" + $Type + ".ps1"
+            $ModuleBase = (Get-Module OnePowerShellProfile -ListAvailable).ModuleBase
+            $File = Join-Path $ModuleBase "\Profile\$Type.ps1"
         }
         else {
             throw "Parameter 'Type' is expecting profile type values of 'Public' or 'Private'"
@@ -80,7 +81,7 @@ function Set-Profile {
             $PSProfileRootPath = $env:USERPROFILE + '\Documents'
         }
 
-        if ($PSCmdlet.ShouldProcess($PSProfileRoothPath, "Create new directories")) {
+        if ($PSCmdlet.ShouldProcess($PSProfileRootPath, "Create new directories")) {
             New-Item -ItemType Directory -Name "WindowsPowerShell" -Path $PSProfileRootPath -ErrorAction SilentlyContinue
             New-Item -ItemType Directory -Name "PowerShell" -Path $PSProfileRootPath -ErrorAction SilentlyContinue
         }
@@ -116,8 +117,9 @@ function Set-Profile {
                 Write-Output "Archived '$TargetProfileFileName' as '$ArchivedFileName'"
             }
 
-            $PublicProfile = "$PSScriptRoot\Profile\Public.ps1"
-            $PrivateProfile = "$PSScriptRoot\Profile\Private.ps1"
+            $ModuleBase = (Get-Module OnePowerShellProfile -ListAvailable).ModuleBase
+            $PublicProfile = Join-Path $ModuleBase "\Profile\Public.ps1"
+            $PrivateProfile = Join-Path $ModuleBase "\Profile\Private.ps1"
 
             Get-Content $PublicProfile >> $TargetProfile
 

@@ -12,7 +12,7 @@
 RootModule = 'OnePowerShellProfile.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.5'
+ModuleVersion = '1.0.11'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -30,10 +30,10 @@ CompanyName = 'N/A'
 Copyright = '(c) Alex Chong. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = 'Generates a consitent PowerShell profile for each installed PS editions (i.e. Desktop, ISE, Core)'
+Description = 'Generates a duplicate PowerShell profile for each installed PS editions (i.e. Desktop, ISE, Core)'
 
 # Minimum version of the PowerShell engine required by this module
-# PowerShellVersion = ''
+PowerShellVersion = '5.1'
 
 # Name of the PowerShell host required by this module
 # PowerShellHostName = ''
@@ -69,7 +69,7 @@ Description = 'Generates a consitent PowerShell profile for each installed PS ed
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = @()
+FunctionsToExport = @('Invoke-ProfileConfiguration', 'Set-Profile')
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @('Invoke-ProfileConfiguration', 'Set-Profile')
@@ -87,7 +87,7 @@ AliasesToExport = @()
 # ModuleList = @()
 
 # List of all files packaged with this module
-# FileList = @()
+FileList = @('OnePowerShellProfile.psd1', 'OnePowerShellProfile.psm1', 'Profile\Private.ps1', 'Profile\Public.ps1')
 
 # Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.
 PrivateData = @{
@@ -98,10 +98,10 @@ PrivateData = @{
         # Tags = @()
 
         # A URL to the license for this module.
-        # LicenseUri = ''
+        LicenseUri = 'https://github.com/alexchong/OnePowerShellProfile/blob/main/LICENSE.md'
 
         # A URL to the main website for this project.
-        # ProjectUri = ''
+        ProjectUri = 'https://github.com/alexchong/OnePowerShellProfile'
 
         # A URL to an icon representing this module.
         # IconUri = ''
