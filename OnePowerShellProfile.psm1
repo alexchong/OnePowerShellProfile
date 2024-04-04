@@ -63,7 +63,7 @@ function Set-Profile {
     [CmdletBinding(SupportsShouldProcess=$True)]
     param(
         [boolean] $IncludePrivate = $False,
-        [boolean] $ArchiveCurrentProfile = $False
+        [boolean] $ArchiveOldProfile = $False
     )
     try {
         $PSProfileRootPath = $env:USERPROFILE
@@ -104,7 +104,7 @@ function Set-Profile {
                 }
             }
 
-            if ($ArchiveCurrentProfile -eq $True)
+            if ($ArchiveOldProfile -eq $True)
             {
                 if (!(Test-Path ($TargetProfilePath + "\Archived"))) {
                     if ($PSCmdlet.ShouldProcess($TargetProfilePath + "\Archived", "Create new directory")) {
@@ -132,7 +132,7 @@ function Set-Profile {
                 Write-Output "Appended $PrivateProfile to $TargetProfile"
             }
 
-            Write-Output "Updated '$TargetProfile'"
+            Write-Output "[DONE] Updated '$TargetProfile'"
         }
 
         Write-Output "[NOTICE] Restart a new session, or invoke '. `$PROFILE' to source the latest profile in this session"
