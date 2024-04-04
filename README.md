@@ -4,7 +4,7 @@ Enables a one-and-done global PowerShell profile for **all installed PS editions
 
 OnePowerShellProfile essentially generates duplicate profile files for each PS edition installed on the machine -- based off the content of the `Public.ps1` and `Private.ps1` files provided in this module.
 
-Any previously saved profiles are 
+Profiles can be saved and archived 
 
 ## Installation
 
@@ -16,7 +16,7 @@ Install **OnePowerShellProfile** from the [PowerShell Gallery](https://www.power
 ## Quickstart
 
 ```powershell
-Invoke-ProfileConfiguration
+Invoke-ProfileConfiguration -Type Public # Add profile stuff here (e.g. aliases, environment paths)
 Set-Profile -ArchiveCurrentProfule $True # Save your existing profile in case you want to revert!!!!
 ```
 
@@ -34,15 +34,15 @@ Set-Profile
 
 
 ## FAQ
-> Q. What does this do?
+### Q. What does this do?
 
 It builds a global PowerShell profile, and distributes it across any installed PS editions (i.e. Desktop, ISE, Core).
 
-> Q. Why do you use this?
+### Q. Why do you use this?
 
 I frequently switch between different PowerShell editions, and this helps me maintain an overall persistent profile environment.
 
-> Q. What is `Public.ps1` and `Private.ps1`?
+### Q. What is `Public.ps1` and `Private.ps1`?
 
 `Public.ps1` and `Private.ps1` are the **two source files that are concatenated into the global PowerShell profile.** 
 
@@ -56,6 +56,15 @@ Set-Profile -IncludesPrivate $False -ArchiveOldProfile $True
 # => [DONE] Updated /path/to/Microsoft.PowerShell_profile.ps1
 ```
 
-> Q. How do I toggle which PS editions I want to generate a profile for?
+### Q. Where are my older/archived profiles saved?
+
+Using `Set-Profile`, if `-ArchiveOldProfile` option is set to `$True`, then it will generate a message like this:
+
+> [DONE] Updated /path/to/Microsoft.PowerShell_profile.ps1
+
+From there, you can navigate to the provided path.
+
+
+### Q. How do I toggle which PS editions I want to generate a profile for?
 
 I have not included this functionality yet, but plan to if I eventually need to, or if requested.
