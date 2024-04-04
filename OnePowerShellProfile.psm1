@@ -117,7 +117,7 @@ function Set-Profile {
                     if ($PSCmdlet.ShouldProcess($TargetProfile, "Archive file")) {
                         Copy-Item $TargetProfile ($TargetProfilePath + "\Archived\" + $ArchivedFileName)
                     }
-                    Write-Output "Archived '$TargetProfileFileName' as '$ArchivedFileName'"
+                    Write-Output "Archived $ArchivedFileName at $TargetProfileFileName"
                 }
             }
 
@@ -125,13 +125,14 @@ function Set-Profile {
             $PublicProfile = Join-Path $ModuleBase "\Profile\Public.ps1"
             $PrivateProfile = Join-Path $ModuleBase "\Profile\Private.ps1"
 
-            Get-Content $PublicProfile >> $TargetProfile
+            Get-Content $PublicProfile > $TargetProfile
 
             if ($IncludePrivate -eq $true) {
                 Get-Content $PrivateProfile >> $TargetProfile
+                Write-Output "Appended $PrivateProfile to $TargetProfile"
             }
 
-            Write-Output "Generated '$TargetProfile'"
+            Write-Output "Updated '$TargetProfile'"
         }
 
         Write-Output "[NOTICE] Restart a new session, or invoke '. `$PROFILE' to source the latest profile in this session"
