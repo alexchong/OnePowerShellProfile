@@ -8,7 +8,21 @@ Profiles can be saved and archived
 
 ## Installation
 
-Install **OnePowerShellProfile** from the [PowerShell Gallery](https://www.powershellgallery.com/packages/OnePowerShellProfile/1)
+### PowerShell Gallery (Recommended)
+
+```powershell
+Install-Module -Name OnePowerShellProfile 
+```
+via https://www.powershellgallery.com/packages/OnePowerShellProfile
+
+
+### Source
+
+```powershell
+git clone https://github.com/alexchong/OnePowerShellProfile.git
+
+Import-Module /path/to/OnePowerShellProfile.psm1
+```
 
 ## Requirements
 * PowerShell 5.1 or later
