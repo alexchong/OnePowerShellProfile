@@ -62,7 +62,8 @@ function Invoke-ProfileConfiguration {
 function Set-Profile {
     [CmdletBinding(SupportsShouldProcess=$True)]
     param(
-        [boolean] $IncludesPrivate = $True
+        [boolean] $IncludePrivate = $False,
+        [boolean] $ArchiveCurrentProfile = $False
     )
     try {
         $PSProfileRootPath = $env:USERPROFILE
@@ -103,18 +104,21 @@ function Set-Profile {
                 }
             }
 
-            if (!(Test-Path ($TargetProfilePath + "\Archived"))) {
-                if ($PSCmdlet.ShouldProcess($TargetProfilePath + "\Archived", "Create new directory")) {
-                    New-Item -ItemType Directory -Name "Archived" -Path $TargetProfilePath
+            if ($ArchiveCurrentProfile -eq $True)
+            {
+                if (!(Test-Path ($TargetProfilePath + "\Archived"))) {
+                    if ($PSCmdlet.ShouldProcess($TargetProfilePath + "\Archived", "Create new directory")) {
+                        New-Item -ItemType Directory -Name "Archived" -Path $TargetProfilePath
+                    }
                 }
-            }
-            else {
-                $Timestamp = $timestamp = Get-Date -Format o | ForEach-Object { $_ -replace ":", "." }
-                $ArchivedFileName = $Timestamp + "_" + $TargetProfileFileName
-                if ($PSCmdlet.ShouldProcess($TargetProfile, "Archive file")) {
-                    Copy-Item $TargetProfile ($TargetProfilePath + "\Archived\" + $ArchivedFileName)
+                else {
+                    $Timestamp = $timestamp = Get-Date -Format o | ForEach-Object { $_ -replace ":", "." }
+                    $ArchivedFileName = $Timestamp + "_" + $TargetProfileFileName
+                    if ($PSCmdlet.ShouldProcess($TargetProfile, "Archive file")) {
+                        Copy-Item $TargetProfile ($TargetProfilePath + "\Archived\" + $ArchivedFileName)
+                    }
+                    Write-Output "Archived '$TargetProfileFileName' as '$ArchivedFileName'"
                 }
-                Write-Output "Archived '$TargetProfileFileName' as '$ArchivedFileName'"
             }
 
             $ModuleBase = (Get-Module OnePowerShellProfile -ListAvailable).ModuleBase
@@ -123,14 +127,14 @@ function Set-Profile {
 
             Get-Content $PublicProfile >> $TargetProfile
 
-            if ($IncludesPrivate -eq $true) {
+            if ($IncludePrivate -eq $true) {
                 Get-Content $PrivateProfile >> $TargetProfile
             }
 
             Write-Output "Generated '$TargetProfile'"
         }
 
-        Write-Output "[NOTICE] Reset this session, or invoke '. `$PROFILE' to source the latest profile in this session"
+        Write-Output "[NOTICE] Restart a new session, or invoke '. `$PROFILE' to source the latest profile in this session"
     }
     catch {
         throw
